@@ -31,3 +31,28 @@ create table user(
 
 
 使用nginx反向代理解决了跨域问题。
+
+
+
+nginx.conf:
+
+```nginx
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+    server{
+        listen 1234;
+        location /api{
+            proxy_pass http://localhost:50000/api;
+        }
+        location /{
+            proxy_pass http://localhost:8080;
+        }
+    }
+
+}
+
+```
+
